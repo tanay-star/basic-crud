@@ -4,14 +4,17 @@ import './post.styles.css'
 import { connect } from 'react-redux'
 //importing actions
 import { deletePost } from '../../store/form/form.actions'
+import { editPost } from '../../store/form/form.actions'
 
-const Post = ({ title, body, id, deletePost }) => {
+const Post = ({ title, body, id, deletePost, editPost }) => {
   return (
     <div className="post">
       <h2 className="post_title">{title}</h2>
       <p className="post_message">{body}</p>
       <div className="control-buttons">
-        <button className="edit">Edit</button>
+        <button className="edit" onClick={() => editPost(id)}>
+          Edit
+        </button>
         <button onClick={() => deletePost(id)} className="delete">
           Delete
         </button>
@@ -23,6 +26,7 @@ const Post = ({ title, body, id, deletePost }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     deletePost: (data) => dispatch(deletePost(data)),
+    editPost: (data) => dispatch(editPost(data)),
   }
 }
 

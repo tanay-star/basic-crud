@@ -4,6 +4,7 @@ import './AllPosts.styles.css'
 import { connect } from 'react-redux'
 //importing componnets
 import Post from '../post/post'
+import EditComponent from '../editcomponent/editcomponent'
 
 const AllPosts = ({ posts }) => {
   console.log('posts:', posts)
@@ -12,12 +13,22 @@ const AllPosts = ({ posts }) => {
       <h1 className="post_heading">All Posts</h1>
       {posts.map((post) => {
         return (
-          <Post
-            key={post.id}
-            title={post.title}
-            body={post.body}
-            id={post.id}
-          />
+          <div key={post.id}>
+            {post.editing ? (
+              <EditComponent
+                key={post.id}
+                id={post.id}
+                editing={post.editing}
+              />
+            ) : (
+              <Post
+                key={post.id}
+                id={post.id}
+                title={post.title}
+                body={post.body}
+              />
+            )}
+          </div>
         )
       })}
     </div>

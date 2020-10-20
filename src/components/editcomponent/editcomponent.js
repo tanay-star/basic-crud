@@ -1,13 +1,13 @@
 import React from 'react'
-import './PostForm.styles.css'
+import './editcomponent.styles.css'
 //connecting to redux
 import { connect } from 'react-redux'
 //importing actions
-import { createPost } from '../../store/form/form.actions'
+import { update } from '../../store/form/form.actions'
 
-class PostForm extends React.Component {
-  constructor() {
-    super()
+class EditComponent extends React.Component {
+  constructor(props) {
+    super(props)
     this.state = {
       title: '',
       body: '',
@@ -21,17 +21,15 @@ class PostForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state)
-    let data = { ...this.state, id: new Date(), editing: false }
-    this.props.createPost(data)
+    let data = { ...this.state, id: this.props.id, editing: this.props.editing }
+    this.props.update(data)
     this.setState({ title: '', body: '' }) //this is clearing the fields after submit.
   }
 
   render() {
     return (
-      <div className="post-container">
-        <h1 className="post_heading">Create Post</h1>
-        <form className="form" onSubmit={this.handleSubmit}>
+      <div className="post">
+        <form onSubmit={this.handleSubmit} className="form">
           <input
             type="text"
             placeholder="Enter the post title"
@@ -53,7 +51,7 @@ class PostForm extends React.Component {
           />
           <br />
           <br />
-          <button>Post</button>
+          <button>Update</button>
         </form>
       </div>
     )
@@ -62,8 +60,8 @@ class PostForm extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createPost: (data) => dispatch(createPost(data)),
+    update: (data) => dispatch(update(data)),
   }
 }
 
-export default connect(null, mapDispatchToProps)(PostForm)
+export default connect(null, mapDispatchToProps)(EditComponent)
